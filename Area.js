@@ -76,8 +76,36 @@ Area.prototype.makeModel = function() {
 		}
 		var p = this.polygons[i];
 		console.log('making model of poly '+p.low+' '+p.high);
+		// FIXME: clockwise point order
 		addAll(p.pts, p.low, -1.);
 		addAll(p.pts, p.high, 1.);
+
+		for(var j=0; j<p.pts.length; ++j) {
+			var n0 = verts.length/3;
+			var jj = (j+1)%p.pts.length;
+			var v = p.pts[j];
+			var vv = p.pts[jj];
+			var c = hsvrgb(1.*j/p.pts.length, 1, 1);
+			var cc = hsvrgb(1.*jj/p.pts.length, 1, 1);
+			verts.push(v[0], p.low, v[1]);
+			colors.addAll(c);
+			verts.push(vv[0], p.low, vv[1]);
+			colors.addAll(cc);
+			verts.push(v[0], p.high, v[1]);
+			colors.addAll(c);
+			verts.push(v[0], p.high, v[1]);
+			colors.addAll(c);
+			verts.push(vv[0], p.low, vv[1]);
+			colors.addAll(cc);
+			verts.push(vv[0], p.high, vv[1]);
+			colors.addAll(cc);
+			var dir = vsub(vv,v);
+			var normal = vec3(dir[1], 0, -dir[0]);
+			for(var k=0; k<6; ++k) {
+				indices.push(n0+k);
+				normals.addAll(normal);
+			}
+		}
 	}
 
 	this.model = new Model();

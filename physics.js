@@ -1,6 +1,7 @@
 function moveUnit(u, dt, area) {
 	var pvel = u.vel;
 	var prevVY = u.vel[1];
+	var prevY = u.pos[1];
 	var movexz = vec3(u.move[0], 0., u.move[2]);
 	u.vel = vmul(u.speed, movexz);
 	u.pos = vadd(u.pos, vmul(.5*dt, vadd(pvel, u.vel)));
