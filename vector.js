@@ -42,8 +42,11 @@ function dot(a, b) {
 	for(var i=0; i<a.length; ++i) r += a[i] * b[i];
 	return r;
 }
+function cross2(a, b) {
+	return a[0]*b[1] - a[1]*b[0];
+}
 function cross(a, b) {
-	if (a.length==2) return a[0]*b[1] - a[1]*b[0];
+	if (a.length==2) return cross2(a,b);
 	return [
 		a[1]*b[2] - a[2]*b[1],
 		a[2]*b[0] - a[0]*b[2],

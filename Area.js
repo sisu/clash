@@ -99,12 +99,13 @@ Area.prototype.getIntersecting = function(pos, rad) {
 			var a = t.pts[i];
 			var b = t.pts[(i+1)%t.pts.length];
 			// XXX: breaks for non-triangles
-			if (cross(vsub(b,a), vsub(pos2,a)) > 0) {
+			if (cross2(vsub(b,a), vsub(pos2,a)) < 0) {
 				var dist2 = pointSegDist(a, b, pos2);
 				assert(isFinite(dist2), 'dist2');
 				var disth = y<t.low ? t.low-y : y>t.high ? t.high-y : 0;
 //				console.log('not inside '+a+' '+b+' ; '+dist2+' '+disth);
 				var dist = Math.sqrt(dist2*dist2 + disth*disth);
+//				if (dist<= rad) console.log('yes '+dist+' '+rad+" ; "+dist2+' '+disth);
 				return dist <= rad;
 			}
 		}

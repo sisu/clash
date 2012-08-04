@@ -25,10 +25,14 @@ function mvmult(m, v) {
 	return r;
 }
 
-function identityM(n) {
+function zeroM(n) {
 	var r = [];
 	r.length = n*n;
 	for(var i=0; i<n*n; ++i) r[i]=0.0;
+	return r;
+}
+function identityM(n) {
+	var r = zeroM(n);
 	for(var i=0; i<n; ++i) r[n*i+i]=1.0;
 	return r;
 }
@@ -60,6 +64,13 @@ function translateM(v) {
 	r[12] = x;
 	r[13] = y;
 	r[14] = z;
+	return r;
+}
+function scaleM(v) {
+	var r = zeroM(4);
+	for(var i=0; i<3; ++i)
+		r[4*i+i] = v[i];
+	r[4*3+3] = 1.;
 	return r;
 }
 
