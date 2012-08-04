@@ -1,0 +1,61 @@
+<html>
+<head>
+<script id="shader-fs" type="x-shader/x-fragment">
+#ifdef GL_ES
+precision highp float;
+#endif
+
+uniform vec3 ldir;
+
+varying vec4 vpos;
+varying vec3 vnormal;
+varying vec3 vcolor;
+void main() {
+	vec3 norm = normalize(vnormal);
+//	gl_FragColor = vpos;
+	float a = .3 + .7*dot(norm, ldir);
+	vec3 c = vcolor * vec3(a,a,a);
+	gl_FragColor = vec4(c,1);
+}
+</script>
+<script id="shader-vs" type="x-shader/x-vertex">
+uniform mat4 trans;
+uniform mat3 nmat;
+
+attribute vec3 pos;
+attribute vec3 normal;
+attribute vec3 color;
+
+varying vec4 vpos;
+varying vec3 vnormal;
+varying vec3 vcolor;
+
+void main() {
+	gl_Position = trans * vec4(pos, 1);
+	vpos = vec4(pos,1);
+	vnormal = nmat * normal;
+	vcolor = color;
+}
+</script>
+
+<script type="text/javascript" src="util.js"></script>
+<script type="text/javascript" src="vector.js"></script>
+<script type="text/javascript" src="matrix.js"></script>
+<script type="text/javascript" src="Buffer.js"></script>
+<script type="text/javascript" src="Model.js"></script>
+<script type="text/javascript" src="shader.js"></script>
+<script type="text/javascript" src="modelgen.js"></script>
+<script type="text/javascript" src="Unit.js"></script>
+<script type="text/javascript" src="Area.js"></script>
+<script type="text/javascript" src="game.js"></script>
+<script type="text/javascript" src="input.js"></script>
+<script type="text/javascript" src="physics.js"></script>
+<script type="text/javascript" src="geometry.js"></script>
+<script type="text/javascript" src="t.js"></script>
+<script type="text/javascript" src="draw.js"></script>
+</head>
+<body onload="init()">
+<canvas id="canvas" width="800" height="600">Canvas support required.</canvas>
+<div id="debug"></div>
+</body>
+</html>
