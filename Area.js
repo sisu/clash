@@ -33,10 +33,12 @@ Area.prototype.generate = function() {
 	this.polygons.push(base);
 
 	var pts = [[10,10], [-10,10], [-10,-10], [10,-10]];
+//	var hs = [-.5, 0., .5, 1.];
+	var hs = [.5,0,1,1];
 	for(var i=0; i<pts.length; ++i) {
 		var p = makePoly(6, vec2(0,5), pts[i]);
-		p.low = 1;
-		p.high = 2.;
+		p.low = hs[i];
+		p.high = hs[i]+1.;
 		this.polygons.push(p);
 	}
 

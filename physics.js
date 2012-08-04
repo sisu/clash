@@ -19,10 +19,12 @@ function moveUnit(u, dt, area) {
 		var tri = inters[i];
 		if (tri.high < u.pos[1]) continue;
 		if (tri.low > u.pos[1]+u.height) continue;
-		u.pos[1] = tri.high;
-		u.vel[1] = 0.;
-		if (u.move[1]) {
-			u.vel[1] = 3.;
+		if (prevY >= tri.high-1e-6) {
+			u.pos[1] = tri.high;
+			u.vel[1] = 0.;
+			if (u.move[1]) {
+				u.vel[1] = 3.;
+			}
 		}
 	}
 }

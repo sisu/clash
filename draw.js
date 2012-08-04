@@ -53,7 +53,8 @@ function draw() {
 
 	drawUnit(game.player, view);
 
-	setTrans(view, identityM(4));
+//	setTrans(view, identityM(4));
+	setTrans(view, scaleM([1,1,-1]));
 	game.area.model.draw();
 
 	var err = gl.getError();
