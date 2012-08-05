@@ -4,7 +4,7 @@ function getViewM() {
 	ppos[1] = 0.;
 	ppos[0] *= -1;
 	var ptrans = translateM(ppos);
-	var trans = translateM(vec3(0.,-1.,-12.));
+	var trans = translateM(vec3(0.,-1.,-15.));
 	var rot = resizeM(rotateX(.5), 4);
 	return mmmult(mmmult(mmmult(proj, trans), rot), ptrans);
 }

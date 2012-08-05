@@ -32,6 +32,7 @@ Area.prototype.generate = function() {
 	base.high = 0.;
 	this.polygons.push(base);
 
+	/*
 	var pts = [[10,10], [-10,10], [-10,-10], [10,-10]];
 //	var hs = [-.5, 0., .5, 1.];
 	var hs = [.5,0,1.5,2];
@@ -39,6 +40,16 @@ Area.prototype.generate = function() {
 		var p = makePoly(6, vec2(0,5), pts[i]);
 		p.low = hs[i];
 		p.high = hs[i]+1.;
+		this.polygons.push(p);
+	}
+	*/
+	for(var i=0; i<20; ++i) {
+		var x = 6*Math.cos(2*i) + 7*Math.sin(3*i);
+		var y = 6*Math.cos(4*i) + 4*Math.sin(5.3*i);
+		var s = 1 + (1+Math.cos(3*i+Math.sin(4*i)));
+		var p = makePoly(6, vec2(0,s), vec2(x,y));
+		p.low = 2*(2+Math.sin(5.1*i)+Math.cos(3.4*i));
+		p.high = p.low+.5;
 		this.polygons.push(p);
 	}
 

@@ -32,7 +32,7 @@ function moveUnit(u, dt, area) {
 			u.pos[1] = tri.high;
 			u.vel[1] = 0.;
 			if (u.move[1]) {
-				u.vel[1] = 8.;
+				u.vel[1] = 10.;
 			}
 		} else if (prevY+u.height <= tri.low) {
 			u.pos[1] = tri.low-u.height;
