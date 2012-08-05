@@ -34,7 +34,7 @@ Area.prototype.generate = function() {
 
 	var pts = [[10,10], [-10,10], [-10,-10], [10,-10]];
 //	var hs = [-.5, 0., .5, 1.];
-	var hs = [.5,0,1,1];
+	var hs = [.5,0,1.5,2];
 	for(var i=0; i<pts.length; ++i) {
 		var p = makePoly(6, vec2(0,5), pts[i]);
 		p.low = hs[i];
@@ -82,31 +82,24 @@ Area.prototype.makeModel = function() {
 		addAll(p.pts, p.low, -1.);
 		addAll(p.pts, p.high, 1.);
 
+		var n0 = verts.length/3;
+		var narr = [];
 		for(var j=0; j<p.pts.length; ++j) {
-			var n0 = verts.length/3;
 			var jj = (j+1)%p.pts.length;
 			var v = p.pts[j];
 			var vv = p.pts[jj];
-			var c = hsvrgb(1.*j/p.pts.length, 1, 1);
-			var cc = hsvrgb(1.*jj/p.pts.length, 1, 1);
-			verts.push(v[0], p.low, v[1]);
-			colors.addAll(c);
-			verts.push(vv[0], p.low, vv[1]);
-			colors.addAll(cc);
-			verts.push(v[0], p.high, v[1]);
-			colors.addAll(c);
-			verts.push(v[0], p.high, v[1]);
-			colors.addAll(c);
-			verts.push(vv[0], p.low, vv[1]);
-			colors.addAll(cc);
-			verts.push(vv[0], p.high, vv[1]);
-			colors.addAll(cc);
 			var dir = vsub(vv,v);
+			// FIXME: doesn't take the other side into account
 			var normal = vec3(dir[1], 0, -dir[0]);
-			for(var k=0; k<6; ++k) {
-				indices.push(n0+k);
+			var c = hsvrgb(1.*j/p.pts.length, 1, 1);
+			var hs = [p.low, p.high];
+			for(var k=0; k<2; ++k) {
+				verts.push(v[0], hs[k], v[1]);
+				colors.addAll(c);
 				normals.addAll(normal);
 			}
+			indices.push(n0+2*j, n0+2*jj, n0+2*j+1);
+			indices.push(n0+2*j+1, n0+2*jj, n0+2*jj+1);
 		}
 	}
 
@@ -118,12 +111,12 @@ Area.prototype.makeModel = function() {
 
 	this.model.load();
 }
-Area.prototype.getIntersecting = function(pos, rad) {
+Area.prototype.getIntersectingCone = function(pos, rad, height) {
 	var pos2 = xz(pos);
 	var y = pos[1];
 	function intersect(t) {
-		if (y+rad < t.low) return false;
-		if (y-rad > t.high) return false;
+		if (y+height < t.low) return false;
+		if (y > t.high) return false;
 //		console.log('height ok');
 		for(var i=0; i<t.pts.length; ++i) {
 			var a = t.pts[i];
@@ -132,11 +125,8 @@ Area.prototype.getIntersecting = function(pos, rad) {
 			if (cross2(vsub(b,a), vsub(pos2,a)) < 0) {
 				var dist2 = pointSegDist(a, b, pos2);
 				assert(isFinite(dist2), 'dist2');
-				var disth = y<t.low ? t.low-y : y>t.high ? t.high-y : 0;
-//				console.log('not inside '+a+' '+b+' ; '+dist2+' '+disth);
-				var dist = Math.sqrt(dist2*dist2 + disth*disth);
-//				if (dist<= rad) console.log('yes '+dist+' '+rad+" ; "+dist2+' '+disth);
-				return dist <= rad;
+//				console.log('not inside '+a+' '+b+' ; '+dist2);
+				return dist2 <= rad;
 			}
 		}
 		return true;

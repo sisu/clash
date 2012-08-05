@@ -13,18 +13,20 @@ function moveUnit(u, dt, area) {
 
 	var midpos = u.pos.copy();
 	midpos[1] += .5*u.height;
-	var inters = area.getIntersecting(u.pos, Math.sqrt(.25*u.height*u.height + u.rad*u.rad));
+	var inters = area.getIntersectingCone(u.pos, u.rad, u.height);
 //	console.log(inters.length);
 	for(var i=0; i<inters.length; ++i) {
 		var tri = inters[i];
-		if (tri.high < u.pos[1]) continue;
-		if (tri.low > u.pos[1]+u.height) continue;
 		if (prevY >= tri.high-1e-6) {
 			u.pos[1] = tri.high;
 			u.vel[1] = 0.;
 			if (u.move[1]) {
 				u.vel[1] = 3.;
 			}
+		} else if (prevY+u.height <= tri.low) {
+			u.pos[1] = tri.low-u.height;
+			u.vel[1] = 0.;
+		} else {
 		}
 	}
 }

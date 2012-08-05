@@ -17,6 +17,7 @@ var game = {
 		this.updateMove();
 		this.moveUnits(dt);
 		draw();
+//		clearInterval(updateID);
 	},
 	updateMove: function() {
 		var x = !!this.pressedKeys[39] - !!this.pressedKeys[37];

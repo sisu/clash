@@ -6,6 +6,9 @@ function pointSegDist(a, b, p) {
 	if (dot(d, ap)<=0) return norm(ap);
 //	if (norm(cross(d,ap))==0) console.log('dap 0 '+cross(d,ap));
 	if (a.length==2)
-		return cross2(d,ap) / norm(d);
+		return Math.abs(cross2(d,ap) / norm(d));
 	return norm(cross(d,ap)) / norm(d);
+}
+function project(v, normal) {
+	return vsub(v, vmul(-dot(v,normal)/norm2(normal), normal));
 }
