@@ -10,6 +10,7 @@ var game = {
 		this.player.pos = vec3(0.,1.5,0.);
 	},
 	update: function() {
+		try {
 		var time = new Date().getTime();
 		var dt = (time-this.prevTime)/1000.;
 		this.prevTime = time;
@@ -17,7 +18,10 @@ var game = {
 		this.updateMove();
 		this.moveUnits(dt);
 		draw();
-//		clearInterval(updateID);
+		} catch(err) {
+			console.log('exception: '+err);
+			clearInterval(updateID);
+		}
 	},
 	updateMove: function() {
 		var x = !!this.pressedKeys[39] - !!this.pressedKeys[37];
