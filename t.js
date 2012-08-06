@@ -43,6 +43,7 @@ function init() {
 	time0 = new Date().getTime();
 	var canvas = document.getElementById('canvas');
 	gl = canvas.getContext("webgl") || canvas.getContext("experimental-webgl");
+	assert(gl, 'gl');
 //	initDebug();
 	initShaders();
 	game.init();
