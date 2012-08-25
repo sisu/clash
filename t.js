@@ -1,7 +1,6 @@
 var prog = null;
 var model = null;
 var gl = null;
-var time0 = null;
 
 function makeModel() {
 	var m = new Model();
@@ -40,7 +39,6 @@ function debug(str) {
 
 var updateID;
 function init() {
-	time0 = new Date().getTime();
 	var canvas = document.getElementById('canvas');
 	gl = canvas.getContext("webgl") || canvas.getContext("experimental-webgl");
 	assert(gl, 'gl');
@@ -48,6 +46,13 @@ function init() {
 	initShaders();
 	game.init();
 	draw();
-	updateID = setInterval(function() {game.update();},30);
+	game.start();
 	console.log("init done");
+}
+
+window.onfocus = function() {
+	game.start();
+}
+window.onblur = function() {
+	game.stop();
 }

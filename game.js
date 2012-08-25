@@ -25,6 +25,15 @@ var game = {
 			clearInterval(updateID);
 		}
 	},
+	start: function() {
+		if (updateID) return;
+		this.prevTime = new Date().getTime();
+		updateID = setInterval(function() {game.update();},30);
+	},
+	stop: function() {
+		clearInterval(updateID);
+		updateID = null;
+	},
 	updateMove: function() {
 		var x = !!this.pressedKeys[39] - !!this.pressedKeys[37];
 		var z = !!this.pressedKeys[38] - !!this.pressedKeys[40];

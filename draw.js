@@ -9,7 +9,7 @@ function getViewM() {
 	return mmmult(mmmult(mmmult(proj, trans), rot), ptrans);
 }
 function unitTransM(u) {
-	var curT = new Date().getTime(); var t = (curT-time0) / 1000.;
+//	var curT = new Date().getTime(); var t = (curT-time0) / 1000.;
 //	var rot = resizeM(rotateY(3*t), 4);
 //	var rot2 = resizeM(rotateX(2*t), 4); var rotation = mmmult(rot2,rot);
 	var ppos = u.pos.copy();
