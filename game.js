@@ -1,5 +1,6 @@
 var game = {
 	player: new Unit(),
+	units: [],
 	pressedKeys: [],
 	prevTime: new Date().getTime(),
 	area: new Area(),
@@ -8,6 +9,7 @@ var game = {
 		this.player.model = makeCube();;
 		this.area.generate();
 		this.player.pos = vec3(0.,1.5,0.);
+		this.units.push(this.player);
 	},
 	update: function() {
 		try {
@@ -30,6 +32,9 @@ var game = {
 		this.player.move = vec3(x, y, z);
 	},
 	moveUnits: function(dt) {
-		moveUnit(this.player, dt, this.area);
+		for(var i=0; i<this.units.length; ++i) {
+			moveUnit(this.units[i], dt, this.area);
+		}
+//		moveUnit(this.player, dt, this.area);
 	}
 };
