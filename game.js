@@ -4,7 +4,8 @@ var game = {
 	pressedKeys: [],
 	prevTime: new Date().getTime(),
 	area: new Area(),
-	
+	updateID: null,
+
 	init: function() {
 		this.player.model = makeCube();;
 		this.area.generate();
@@ -20,26 +21,26 @@ var game = {
 	},
 	update: function() {
 		try {
-		var time = new Date().getTime();
-		var dt = (time-this.prevTime)/1000.;
-		this.prevTime = time;
+			var time = new Date().getTime();
+			var dt = (time-this.prevTime)/1000.;
+			this.prevTime = time;
 
-		this.updateMove();
-		this.moveUnits(dt);
-		draw();
+			this.updateMove();
+			this.moveUnits(dt);
+			draw();
 		} catch(err) {
 			console.log('exception: '+err);
-			clearInterval(updateID);
+			this.stop();
 		}
 	},
 	start: function() {
-		if (updateID) return;
+		if (this.updateID) return;
 		this.prevTime = new Date().getTime();
-		updateID = setInterval(function() {game.update();},30);
+		this.updateID = setInterval(function() {game.update();},30);
 	},
 	stop: function() {
-		clearInterval(updateID);
-		updateID = null;
+		clearInterval(this.updateID);
+		this.updateID = null;
 	},
 	updateMove: function() {
 		var x = !!this.pressedKeys[39] - !!this.pressedKeys[37];

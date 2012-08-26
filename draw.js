@@ -1,12 +1,33 @@
+function getCamSpeed(ydiff, prevV) {
+	return ydiff;
+}
+var camY=null, camYVel=0.;
+var prevDrawTime=null;
+
 function getViewM() {
 	var proj = perspectiveM(radians(60.0), 4./3., 0.1, 100.);
 	var ppos = game.player.pos.copy();
-	ppos[1] = 0.;
+
+	if (prevDrawTime===null) {
+		prevDrawTime = new Date().getTime();
+	}
+	var time = new Date().getTime();
+	var dt = (time-prevDrawTime)/1000.;
+	prevDrawTime = time;
+
+	if (camY===null) {
+		camY = ppos[1];
+		camYVel = 0.;
+	}
+	camYVel = getCamSpeed(ppos[1]-camY, camYVel);
+	camY += dt*camYVel;
+	ppos[1] = -camY;
+
 	ppos[0] *= -1;
 	var ptrans = translateM(ppos);
 	var trans = translateM(vec3(0.,-1.,-15.));
 	var rot = resizeM(rotateX(.5), 4);
-	return mmmult(mmmult(mmmult(proj, trans), rot), ptrans);
+	return mult(proj, trans, rot, ptrans);
 }
 function unitTransM(u) {
 //	var curT = new Date().getTime(); var t = (curT-time0) / 1000.;

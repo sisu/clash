@@ -37,7 +37,6 @@ function debug(str) {
 	debugElem.scrollTop = debugElem.scrollHeight;
 }*/
 
-var updateID;
 function init() {
 	var canvas = document.getElementById('canvas');
 	gl = canvas.getContext("webgl") || canvas.getContext("experimental-webgl");

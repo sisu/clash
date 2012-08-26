@@ -14,6 +14,13 @@ function mmmult(a, b) {
 	}
 	return r;
 }
+function mult() {
+	var r = arguments[0];
+	for(var i=1; i<arguments.length; ++i) {
+		r = mmmult(r, arguments[i]);
+	}
+	return r;
+}
 function mvmult(m, v) {
 	var n = v.length;
 	var r = v.copy();
