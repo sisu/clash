@@ -1,0 +1,10 @@
+- optimize collision detection
+- player model
+- enemies, ai
+- hp, damage
+- sword, hitting
+- constant time step
+- pause/continue button
+- level editor+better generator
+- area textures, grass
+- water, swimming
