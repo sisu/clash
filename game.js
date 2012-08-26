@@ -57,7 +57,7 @@ var game = {
 	},
 	moveUnits: function(dt) {
 		for(var i=0; i<this.units.length; ++i) {
-			moveUnit(this.units[i], dt, this.area);
+			moveUnit(this.units[i], dt, this.area, this.units);
 		}
 	}
 };

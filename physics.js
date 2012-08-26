@@ -9,7 +9,7 @@ function fixPoint(a, pt, rad) {
 //	console.log('fixing');
 	return vadd(pt, ivmul(rad/norm(dir), dir));
 }
-function moveUnit(u, dt, area) {
+function moveUnit(u, dt, area, units) {
 	var pvel = u.vel;
 	var prevVY = u.vel[1];
 	var prevY = u.pos[1];
@@ -51,8 +51,16 @@ function moveUnit(u, dt, area) {
 //				console.log('ok '+posxz);
 			}
 //			assert(0,'zxc');
-			u.pos[0] = posxz[0];
-			u.pos[2] = posxz[1];
+			setxz(u.pos, posxz);
 		}
+	}
+
+	for(var i=0; i<units.length; ++i) {
+		var uu = units[i];
+		if (uu==u) continue;
+		var ydiff = u.pos[1] - uu.pos[1];
+		if (Math.abs(ydiff) >= .5*(u.height+uu.height))
+			continue;
+		setxz(u.pos, fixPoint(xz(u.pos), xz(uu.pos), u.rad+uu.rad));
 	}
 }

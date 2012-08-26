@@ -36,6 +36,10 @@ function vneg(a) {
 function xz(a) {
 	return vec2(a[0],a[2]);
 }
+function setxz(a, b) {
+	a[0]=b[0];
+	a[2]=b[1];
+}
 
 function dot(a, b) {
 	var r=0.0;
