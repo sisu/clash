@@ -84,3 +84,6 @@ function draw() {
 		alert("GL error: "+err);
 	}
 }
+function stopDraw() {
+	prevDrawTime=null;
+}

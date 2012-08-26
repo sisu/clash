@@ -41,6 +41,7 @@ var game = {
 	stop: function() {
 		clearInterval(this.updateID);
 		this.updateID = null;
+		stopDraw();
 	},
 	updateMove: function() {
 		var x = !!this.pressedKeys[39] - !!this.pressedKeys[37];
