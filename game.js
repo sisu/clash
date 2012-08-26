@@ -16,6 +16,7 @@ var game = {
 			var u = new Unit();
 			u.model = this.player.model;
 			u.pos = vec3(5*Math.cos(4.4*i),4*(1+Math.sin(3.3*i)),5*Math.sin(2.1*i));
+			u.ai = new AI(u, this);
 			this.units.push(u);
 		}
 	},
@@ -48,6 +49,11 @@ var game = {
 		var z = !!this.pressedKeys[38] - !!this.pressedKeys[40];
 		var y = 0+!!this.pressedKeys[32];
 		this.player.move = vec3(x, y, z);
+
+		for(var i=0; i<this.units.length; ++i) {
+			var u = this.units[i];
+			if (u.ai) u.ai.run();
+		}
 	},
 	moveUnits: function(dt) {
 		for(var i=0; i<this.units.length; ++i) {
