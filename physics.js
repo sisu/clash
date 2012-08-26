@@ -44,6 +44,7 @@ function moveUnit(u, dt, area) {
 			for(var j=0; j<tri.pts.length; ++j) {
 				var jj = (j+1)%tri.pts.length;
 //				console.log('trying '+tri.pts[j]+' - '+tri.pts[jj]+' ; '+posxz);
+				// FIXME: push only to outside
 				var pt = segClosestPoint(tri.pts[j], tri.pts[jj], posxz);
 				assert(isFinite(pt[0]), pt);
 				posxz = fixPoint(posxz, pt, u.rad);

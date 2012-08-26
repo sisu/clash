@@ -39,7 +39,7 @@ function drawUnit(u, view) {
 	var cloc = gl.getAttribLocation(prog, 'color');
 	gl.disableVertexAttribArray(cloc);
 	gl.vertexAttrib3f(cloc, .7, .4, .8);
-	game.player.model.draw();
+	u.model.draw();
 }
 
 function draw() {
@@ -51,7 +51,8 @@ function draw() {
 
 	var view = getViewM();
 
-	drawUnit(game.player, view);
+	for(var i=0; i<game.units.length; ++i)
+		drawUnit(game.units[i], view);
 
 //	setTrans(view, identityM(4));
 	setTrans(view, scaleM([1,1,-1]));

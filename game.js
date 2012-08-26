@@ -10,6 +10,13 @@ var game = {
 		this.area.generate();
 		this.player.pos = vec3(0.,1.5,0.);
 		this.units.push(this.player);
+
+		for(var i=0; i<6; ++i) {
+			var u = new Unit();
+			u.model = this.player.model;
+			u.pos = vec3(5*Math.cos(4.4*i),4*(1+Math.sin(3.3*i)),5*Math.sin(2.1*i));
+			this.units.push(u);
+		}
 	},
 	update: function() {
 		try {
@@ -44,6 +51,5 @@ var game = {
 		for(var i=0; i<this.units.length; ++i) {
 			moveUnit(this.units[i], dt, this.area);
 		}
-//		moveUnit(this.player, dt, this.area);
 	}
 };
