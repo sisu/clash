@@ -5,5 +5,6 @@ function Unit() {
 	this.rad = .5;
 	this.height = 1.;
 	this.speed = 5.;
+	this.invMass = 1.;
 	this.model = null;
 }

@@ -30,7 +30,7 @@ var game = {
 			this.moveUnits(dt);
 			draw();
 		} catch(err) {
-			console.log('exception: '+err);
+			console.log('exception: '+err.stack);
 			this.stop();
 		}
 	},

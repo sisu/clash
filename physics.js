@@ -9,6 +9,23 @@ function fixPoint(a, pt, rad) {
 //	console.log('fixing');
 	return vadd(pt, ivmul(rad/norm(dir), dir));
 }
+function fixUnits(a, b, dt) {
+	if (a==b) return;
+	if (!rangesHit(a.pos[1], a.pos[1]+a.height, b.pos[1], b.pos[1]+b.height))
+		return;
+	var xzdiff = ivsub(xz(b.pos), xz(a.pos));
+	var dist = norm(xzdiff);
+	var need = a.rad + b.rad;
+	if (dist >= need) return;
+
+	var fixAmount = Math.min(10.*dt*(1+1./dist), need-dist);
+	var fixSpeed = fixAmount/(a.invMass + b.invMass);
+	ivmul(xzdiff, 1./dist);
+
+	setxz(a.pos, ivadd(xz(a.pos), vmul(-a.invMass*fixSpeed, xzdiff)));
+	setxz(b.pos, ivadd(xz(b.pos), vmul(b.invMass*fixSpeed, xzdiff)));
+//	setxz(a.pos, fixPoint(xz(a.pos), xz(b.pos), a.rad+b.rad));
+}
 function moveUnit(u, dt, area, units) {
 	var pvel = u.vel;
 	var prevVY = u.vel[1];
@@ -57,10 +74,6 @@ function moveUnit(u, dt, area, units) {
 
 	for(var i=0; i<units.length; ++i) {
 		var uu = units[i];
-		if (uu==u) continue;
-		var ydiff = u.pos[1] - uu.pos[1];
-		if (Math.abs(ydiff) >= .5*(u.height+uu.height))
-			continue;
-		setxz(u.pos, fixPoint(xz(u.pos), xz(uu.pos), u.rad+uu.rad));
+		fixUnits(u, uu, dt);
 	}
 }

@@ -88,3 +88,7 @@ function hsvrgb(h, s, v){
 
 	return [r, g, b];
 }
+
+function rangesHit(a1,a2, b1,b2) {
+	return a2>=b1 && b2>=a1;
+}
